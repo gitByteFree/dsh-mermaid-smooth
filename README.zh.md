@@ -29,6 +29,8 @@
 dsh plugin --profile web add dsh-mermaid-smooth
 ```
 
+已实测可用：tarball 内含预构建的 `lib/client.js`，安装时无需编译。pnpm 可能会自动把该包加进 profile 的 `pnpm-workspace.yaml` 的 `minimumReleaseAgeExclude`（因为包刚发布）——这是预期行为，无副作用。
+
 **方式二：从 GitHub 安装（固定到指定提交）**
 
 ```sh

@@ -41,6 +41,11 @@ sessions are persisted on disk and can be resumed after restart).
 dsh plugin --profile web add dsh-mermaid-smooth
 ```
 
+Verified working: the tarball ships the prebuilt `lib/client.js`, so nothing
+is compiled at install time. pnpm may auto-add the package to
+`minimumReleaseAgeExclude` in the profile's `pnpm-workspace.yaml` (because the
+package was just published) — that is expected and harmless.
+
 **2. From GitHub (pinned to a commit)**
 
 ```sh

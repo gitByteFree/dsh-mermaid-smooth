@@ -1,0 +1,14 @@
+cordis.patch.yml
+  h_7e95412f1b6d17 1-6
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.7.0",
+  "base_commit_sha": "00ba8a8e34b3a92c124ada2ea0f530354af3313a",
+  "prompts": {},
+  "humans": {
+    "h_7e95412f1b6d17": {
+      "author": "chris <s.android@foxmail.com>"
+    }
+  }
+}

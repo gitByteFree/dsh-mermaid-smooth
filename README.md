@@ -32,35 +32,21 @@ fully bundled offline engine (zero CDN).
 
 ## Install
 
-Four ways — pick one, then restart DSH Web (the current session ends, but
-DSH sessions are persisted on disk and can be resumed after restart).
+Two ways — pick one, then restart DSH Web (the current session ends, but DSH
+sessions are persisted on disk and can be resumed after restart).
 
-**1. npm package (recommended, simplest)**
-
-```sh
-dsh plugin --profile web add dsh-mermaid-smooth
-```
-
-**2. From GitHub (pinned to a verified commit)**
+**1. From GitHub (pinned to a verified commit)**
 
 ```sh
 dsh plugin --profile web add 'github:gitByteFree/dsh-mermaid-smooth#<full-commit-sha>'
 ```
 
-Pin to the commit a release corresponds to; later changes on `main` will not
-silently alter installed code.
+Pin to the commit you want (e.g. the `main` HEAD shown on the repo's commit
+history page); later changes on `main` will not silently alter installed code.
+The source is installed and built at install time (`prepare` runs the esbuild
+bundle), so git and Node.js ≥ 20 are required.
 
-**3. From a release tarball (offline / where git is inconvenient)**
-
-Download `dsh-mermaid-smooth-<version>.tgz` from this repo's Releases (it
-contains the prebuilt `lib/client.js`, so no `prepare` script runs at install
-time), then:
-
-```sh
-dsh plugin --profile web add ./dsh-mermaid-smooth-<version>.tgz
-```
-
-**4. Local clone (for development)**
+**2. Local clone (for development)**
 
 ```sh
 git clone git@github.com:gitByteFree/dsh-mermaid-smooth.git

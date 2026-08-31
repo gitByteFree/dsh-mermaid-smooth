@@ -1,0 +1,14 @@
+src/client.js
+  h_7e95412f1b6d17 1-533
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.7.0",
+  "base_commit_sha": "2141887789e7bcb5f30bc32a10c3fe16d95e9eb8",
+  "prompts": {},
+  "humans": {
+    "h_7e95412f1b6d17": {
+      "author": "chris <s.android@foxmail.com>"
+    }
+  }
+}

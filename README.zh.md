@@ -21,6 +21,8 @@
 
 ## 安装
 
+dsh-mermaid-smooth 是 DeepSeek Harness (dsh) Web 界面的插件。使用前请确保你已安装并配置好 dsh 命令行工具及 Web 环境。
+
 四种方式任选其一，装完重启 DSH Web 即生效（当前会话会中断，但 DSH 会话有磁盘持久化，重启后可以恢复）。
 
 **方式一：npm 正式包（推荐，最简单）**
@@ -29,7 +31,7 @@
 dsh plugin --profile web add dsh-mermaid-smooth
 ```
 
-已实测可用：tarball 内含预构建的 `lib/client.js`，安装时无需编译。pnpm 可能会自动把该包加进 profile 的 `pnpm-workspace.yaml` 的 `minimumReleaseAgeExclude`（因为包刚发布）——这是预期行为，无副作用。
+安装时无需编译。pnpm 可能会自动把该包加进 profile 的 `pnpm-workspace.yaml` 的 `minimumReleaseAgeExclude`（因为包刚发布）——这是预期行为，无副作用。
 
 **方式二：从 GitHub 安装（固定到指定提交）**
 

@@ -32,6 +32,10 @@ fully bundled offline engine (zero CDN).
 
 ## Install
 
+dsh-mermaid-smooth is a plugin for the DeepSeek Harness (dsh) web UI. Before
+proceeding, make sure the dsh CLI and web environment are installed and set
+up.
+
 Four ways — pick one, then restart DSH Web (the current session ends, but DSH
 sessions are persisted on disk and can be resumed after restart).
 

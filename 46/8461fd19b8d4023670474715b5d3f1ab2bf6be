@@ -1,0 +1,21 @@
+README.md
+  s_bbd4bf93699c2b::t_9a7542ad2a72c7 35,38-44,55-66
+README.zh.md
+  s_bbd4bf93699c2b::t_6e5351892161c5 24,26-32,40-48
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.7.0",
+  "base_commit_sha": "468461fd19b8d4023670474715b5d3f1ab2bf6be",
+  "prompts": {},
+  "sessions": {
+    "s_bbd4bf93699c2b": {
+      "agent_id": {
+        "tool": "claude",
+        "id": "a11f9658-e349-4e18-a845-53c41f129929",
+        "model": "fuyao-coding"
+      },
+      "human_author": "chris <s.android@foxmail.com>"
+    }
+  }
+}

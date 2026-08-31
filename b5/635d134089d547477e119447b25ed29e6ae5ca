@@ -1,0 +1,14 @@
+src/index.js
+  h_7e95412f1b6d17 1-14
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.7.0",
+  "base_commit_sha": "b5635d134089d547477e119447b25ed29e6ae5ca",
+  "prompts": {},
+  "humans": {
+    "h_7e95412f1b6d17": {
+      "author": "chris <s.android@foxmail.com>"
+    }
+  }
+}

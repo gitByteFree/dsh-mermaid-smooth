@@ -21,14 +21,36 @@
 
 ## 安装
 
+四种方式任选其一，装完重启 DSH Web 即生效（当前会话会中断，但 DSH 会话有磁盘持久化，重启后可以恢复）。
+
+**方式一：npm 正式包（推荐，最简单）**
+
 ```sh
 dsh plugin --profile web add dsh-mermaid-smooth
 ```
 
-本地开发版直接指向目录：
+**方式二：从 GitHub 安装（固定到已验证的提交）**
 
 ```sh
-dsh plugin --profile web add /path/to/dsh-mermaid-smooth
+dsh plugin --profile web add 'github:gitByteFree/dsh-mermaid-smooth#<40位commit>'
+```
+
+固定到 release 对应的 commit，之后 main 的新改动不会静默改变已安装代码。
+
+**方式三：从 Release tarball 安装（离线 / 不便走 git 的环境）**
+
+从本仓库 Releases 下载 `dsh-mermaid-smooth-<版本>.tgz`（内含构建好的 `lib/client.js`，安装时无需执行任何 prepare 脚本），然后：
+
+```sh
+dsh plugin --profile web add ./dsh-mermaid-smooth-<版本>.tgz
+```
+
+**方式四：克隆后从本地路径安装（开发迭代）**
+
+```sh
+git clone git@github.com:gitByteFree/dsh-mermaid-smooth.git
+cd dsh-mermaid-smooth
+dsh plugin --profile web add .
 ```
 
 安装后重启 web 应用（`dsh web` 或你的 `dsh-web` 服务），使新 bundle 层生效。

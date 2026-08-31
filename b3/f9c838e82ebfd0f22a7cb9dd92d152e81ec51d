@@ -1,0 +1,14 @@
+src/mermaid-runtime.js
+  h_7e95412f1b6d17 1-9
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.7.0",
+  "base_commit_sha": "b3f9c838e82ebfd0f22a7cb9dd92d152e81ec51d",
+  "prompts": {},
+  "humans": {
+    "h_7e95412f1b6d17": {
+      "author": "chris <s.android@foxmail.com>"
+    }
+  }
+}

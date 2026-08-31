@@ -1,0 +1,19 @@
+package.json
+  s_bbd4bf93699c2b::t_0a833981cf684c 6-9
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.7.0",
+  "base_commit_sha": "9837e95c67b05701789ee1599e0698161bc822b4",
+  "prompts": {},
+  "sessions": {
+    "s_bbd4bf93699c2b": {
+      "agent_id": {
+        "tool": "claude",
+        "id": "a11f9658-e349-4e18-a845-53c41f129929",
+        "model": "fuyao-coding"
+      },
+      "human_author": "chris <s.android@foxmail.com>"
+    }
+  }
+}

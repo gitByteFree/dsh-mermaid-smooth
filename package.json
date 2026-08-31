@@ -1,0 +1,40 @@
+{
+  "name": "dsh-mermaid-smooth",
+  "version": "0.1.0",
+  "description": "Render mermaid fences in dsh web chat as diagrams by default with smooth zoom/pan, per-fence diagram/code toggle at top-right, persisted per-fence preference, dark-mode follow, and full offline (bundled engine, zero CDN). DSH 对话 mermaid 围栏默认成图：丝滑缩放拖拽、图右上角图/文案切换、按围栏记忆偏好、明暗主题跟随、引擎本地打包完全离线。",
+  "license": "MIT",
+  "type": "module",
+  "main": "lib/index.js",
+  "exports": {
+    ".": "./lib/index.js",
+    "./client": "./lib/client.js",
+    "./package.json": "./package.json"
+  },
+  "files": [
+    "lib/index.js",
+    "lib/client.js",
+    "cordis.patch.yml",
+    "README.md",
+    "LICENSE"
+  ],
+  "scripts": {
+    "build": "node scripts/build.mjs",
+    "test": "node --test \"test/*.test.mjs\""
+  },
+  "devDependencies": {
+    "mermaid": "^11.17.2",
+    "esbuild": "^0.27.0"
+  },
+  "dsh": {
+    "bundle": {
+      "patch": "./cordis.patch.yml"
+    },
+    "client": {
+      "platform": "web",
+      "inject": []
+    }
+  },
+  "allowScripts": {
+    "esbuild@0.27.7": true
+  }
+}

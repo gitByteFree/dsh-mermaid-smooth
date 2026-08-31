@@ -21,9 +21,15 @@
 
 ## 安装
 
-两种方式任选其一，装完重启 DSH Web 即生效（当前会话会中断，但 DSH 会话有磁盘持久化，重启后可以恢复）。
+四种方式任选其一，装完重启 DSH Web 即生效（当前会话会中断，但 DSH 会话有磁盘持久化，重启后可以恢复）。
 
-**方式一：从 GitHub 安装（固定到指定提交）**
+**方式一：npm 正式包（推荐，最简单）**
+
+```sh
+dsh plugin --profile web add dsh-mermaid-smooth
+```
+
+**方式二：从 GitHub 安装（固定到指定提交）**
 
 ```sh
 dsh plugin --profile web add 'github:gitByteFree/dsh-mermaid-smooth#<40位commit>'
@@ -31,7 +37,15 @@ dsh plugin --profile web add 'github:gitByteFree/dsh-mermaid-smooth#<40位commit
 
 固定到你想装的 commit（如仓库提交历史页显示的 main HEAD），之后 main 的新改动不会静默改变已安装代码。源码安装时会在本机构建（`prepare` 脚本执行 esbuild 打包），需要 git 与 Node.js ≥ 20。
 
-**方式二：克隆后从本地路径安装（开发迭代）**
+**方式三：从 Release tarball 安装（离线 / 不便走 git 的环境）**
+
+从本仓库 [Releases](https://github.com/gitByteFree/dsh-mermaid-smooth/releases) 下载 `dsh-mermaid-smooth-<版本>.tgz`（内含构建好的 `lib/client.js`，安装时无需执行任何 prepare 脚本），然后：
+
+```sh
+dsh plugin --profile web add ./dsh-mermaid-smooth-<版本>.tgz
+```
+
+**方式四：克隆后从本地路径安装（开发迭代）**
 
 ```sh
 git clone git@github.com:gitByteFree/dsh-mermaid-smooth.git

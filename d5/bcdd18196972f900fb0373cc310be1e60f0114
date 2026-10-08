@@ -1,0 +1,16 @@
+README.md
+  h_7e95412f1b6d17 44-60
+README.zh.md
+  h_7e95412f1b6d17 30-44
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.7.5",
+  "base_commit_sha": "d5bcdd18196972f900fb0373cc310be1e60f0114",
+  "prompts": {},
+  "humans": {
+    "h_7e95412f1b6d17": {
+      "author": "chris <s.android@foxmail.com>"
+    }
+  }
+}

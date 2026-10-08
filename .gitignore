@@ -3,3 +3,5 @@ lib/
 .marscode/
 *.log
 graphify-out/
+.marscode/
+tasks/

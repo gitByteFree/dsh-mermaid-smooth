@@ -19,15 +19,17 @@ const NS = "dsh-mermaid-smooth";
 /** Card labels follow the GUI language (dsh's locale service is React-side). */
 const isZh = (navigator.language ?? "en").toLowerCase().startsWith("zh");
 const LABELS = isZh
-  ? { toggle: "</>", showCodeTitle: "查看文案", showDiagramTitle: "查看图", fullscreen: "⛶", exitFullscreen: "⤡", loading: "渲染中…", loadFailed: "离线渲染引擎不可用" }
-  : { toggle: "</>", showCodeTitle: "View code", showDiagramTitle: "View diagram", fullscreen: "⛶", exitFullscreen: "⤡", loading: "Rendering…", loadFailed: "Bundled render engine unavailable" };
+  ? { toggle: "</>", showCodeTitle: "查看文案", showDiagramTitle: "查看图", fullscreen: "⛶", exitFullscreen: "⤡", fitWidth: "适应宽度", fitDiagram: "适应全图", copy: "复制源码", download: "下载 SVG", copied: "已复制源码", copyFailed: "无法复制源码", noSvg: "图表尚未渲染完成", loading: "渲染中…", loadFailed: "离线渲染引擎不可用" }
+  : { toggle: "</>", showCodeTitle: "View code", showDiagramTitle: "View diagram", fullscreen: "⛶", exitFullscreen: "⤡", fitWidth: "Fit width", fitDiagram: "Fit diagram", copy: "Copy source", download: "Download SVG", copied: "Source copied", copyFailed: "Could not copy source", noSvg: "Diagram is not ready", loading: "Rendering…", loadFailed: "Bundled render engine unavailable" };
 
 const CSS = `
 .dsh-mms{margin:8px 0 10px;border:1px solid var(--dsw-alias-border-l1,rgba(127,127,127,.25));border-radius:10px;background:var(--dsw-alias-bg-layer-2,rgba(127,127,127,.06));overflow:hidden}
 .dsh-mms-bar{display:flex;align-items:center;gap:8px;padding:4px 8px;border-bottom:1px solid var(--dsw-alias-border-l1,rgba(127,127,127,.18));background:var(--dsw-alias-bg-layer-1,transparent)}
 .dsh-mms-badge{font:12px/20px var(--ds-font-family-code,ui-monospace,monospace);color:var(--dsw-alias-label-tertiary,#888);padding:0 6px}
-.dsh-mms-actions{margin-left:auto;display:flex;align-items:center;gap:4px}
-.dsh-mms-btn{appearance:none;border:1px solid var(--dsw-alias-border-l1,rgba(127,127,127,.3));background:transparent;color:var(--dsw-alias-label-secondary,#666);border-radius:5px;font:12px/20px inherit;padding:0 10px;cursor:pointer}
+.dsh-mms-actions{margin-left:auto;display:flex;align-items:center;justify-content:flex-end;flex-wrap:wrap;gap:4px}
+.dsh-mms-btn{appearance:none;min-height:28px;border:1px solid var(--dsw-alias-border-l1,rgba(127,127,127,.3));background:transparent;color:var(--dsw-alias-label-secondary,#666);border-radius:5px;font:12px/20px inherit;padding:0 10px;cursor:pointer}
+.dsh-mms-btn-icon{min-width:28px;padding:0 6px}
+.dsh-mms-status{min-width:0;max-width:160px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;font:12px/20px var(--ds-font-family-code,ui-monospace,monospace);color:var(--dsw-alias-label-tertiary,#888)}
 .dsh-mms-btn:hover{background:var(--dsw-alias-interactive-bg-hover,rgba(127,127,127,.1))}
 .dsh-mms-btn[aria-pressed='true']{border-color:var(--dsw-alias-button-primary-fill,#4c6ef5);color:var(--dsw-alias-button-primary-fill,#4c6ef5);background:var(--dsw-alias-interactive-bg-active,rgba(76,110,245,.12))}
 .dsh-mms-btn:focus-visible{outline:2px solid var(--dsw-alias-button-primary-fill,#4c6ef5);outline-offset:1px}
@@ -42,7 +44,7 @@ const CSS = `
 .dsh-mms-code{display:none;margin:0;padding:12px 14px;overflow:auto;max-height:340px;font:13px/1.7 var(--ds-font-family-code,ui-monospace,SFMono-Regular,Menlo,Consolas,monospace);color:var(--dsw-alias-label-primary,#e6e6e6);white-space:pre;tab-size:4}
 .dsh-mms[data-view='code'] .dsh-mms-viewport{display:none}
 .dsh-mms[data-view='code'] .dsh-mms-code{display:block}
-.dsh-mms[data-view='diagram'][data-state='error'] .dsh-mms-code{display:block}
+.dsh-mms[data-view='diagram'] .dsh-mms-viewport[data-state='error'] .dsh-mms-code{display:block}
 /* Fullscreen: the wrapper becomes the fixed layer; the card fills the screen. */
 .dsh-mms[data-fullscreen='true']{position:fixed;inset:0;z-index:2147483000;margin:0;border:none;border-radius:0}
 .dsh-mms[data-fullscreen='true'] .dsh-mms-viewport{height:100%}
@@ -103,6 +105,22 @@ function rememberView(source, view) {
   }
 }
 
+async function copyText(text) {
+  if (navigator.clipboard?.writeText !== undefined) {
+    await navigator.clipboard.writeText(text);
+    return;
+  }
+  const textarea = document.createElement("textarea");
+  textarea.value = text;
+  textarea.style.position = "fixed";
+  textarea.style.opacity = "0";
+  document.body.appendChild(textarea);
+  textarea.select();
+  const copied = document.execCommand("copy");
+  textarea.remove();
+  if (!copied) throw new Error("clipboard unavailable");
+}
+
 function isDark() {
   return document.body?.hasAttribute("data-ds-dark-theme") ?? false;
 }
@@ -160,13 +178,31 @@ function buildCard(codeBlock, source) {
   btnToggle.type = "button";
   btnToggle.className = "dsh-mms-btn dsh-mms-btn-view";
   btnToggle.textContent = LABELS.toggle; // "</>" glyph — same button, both views
+  const button = (text, label) => {
+    const element = document.createElement("button");
+    element.type = "button";
+    element.className = "dsh-mms-btn dsh-mms-btn-icon";
+    element.textContent = text;
+    element.title = label;
+    element.setAttribute("aria-label", label);
+    return element;
+  };
   btnToggle.title = LABELS.toggle;
+  btnToggle.setAttribute("aria-label", LABELS.showCodeTitle);
   const btnFullscreen = document.createElement("button");
   btnFullscreen.type = "button";
   btnFullscreen.className = "dsh-mms-btn dsh-mms-btn-fullscreen";
   btnFullscreen.textContent = LABELS.fullscreen;
   btnFullscreen.title = LABELS.fullscreen;
-  actions.append(btnToggle, btnFullscreen);
+  btnFullscreen.setAttribute("aria-label", LABELS.fullscreen);
+  const btnFitWidth = button("↔", LABELS.fitWidth);
+  const btnFitDiagram = button("⊙", LABELS.fitDiagram);
+  const btnCopy = button("⧉", LABELS.copy);
+  const btnDownload = button("↓", LABELS.download);
+  const status = document.createElement("span");
+  status.className = "dsh-mms-status";
+  status.setAttribute("aria-live", "polite");
+  actions.append(status, btnCopy, btnDownload, btnFitWidth, btnFitDiagram, btnToggle, btnFullscreen);
   bar.append(badge, actions);
 
   const viewport = document.createElement("div");
@@ -183,7 +219,8 @@ function buildCard(codeBlock, source) {
   codeBlock.classList.add("dsh-mms-src");
 
   const entry = {
-    codeBlock, wrapper, viewport, code, btnToggle, btnFullscreen, source,
+    codeBlock, wrapper, viewport, code, btnToggle, btnFullscreen, btnFitWidth,
+    btnFitDiagram, btnCopy, btnDownload, status, source,
     svg: null, naturalW: 0, naturalH: 0, scale: 1, tx: 0, ty: 0, baseScale: 1,
     disposed: false, queued: false, raf: 0,
   };
@@ -197,6 +234,7 @@ function buildCard(codeBlock, source) {
     btnToggle.title = wrapper.dataset.view === "code"
       ? LABELS.showDiagramTitle
       : LABELS.showCodeTitle;
+    btnToggle.setAttribute("aria-label", btnToggle.title);
     btnFullscreen.style.display = wrapper.dataset.view === "diagram" ? "" : "none";
   };
   setPressed();
@@ -204,8 +242,11 @@ function buildCard(codeBlock, source) {
     if (wrapper.dataset.fullscreen !== "true") return;
     delete wrapper.dataset.fullscreen;
     btnFullscreen.textContent = LABELS.fullscreen;
+    btnFullscreen.title = LABELS.fullscreen;
+    btnFullscreen.setAttribute("aria-label", LABELS.fullscreen);
     entry.fit();
   };
+  entry.exitFullscreen = exitFullscreen;
   const setView = (view) => {
     wrapper.dataset.view = view;
     if (view === "code") exitFullscreen(); // fullscreen is diagram-only
@@ -228,7 +269,40 @@ function buildCard(codeBlock, source) {
     } else {
       wrapper.dataset.fullscreen = "true";
       btnFullscreen.textContent = LABELS.exitFullscreen;
+      btnFullscreen.title = LABELS.exitFullscreen;
+      btnFullscreen.setAttribute("aria-label", LABELS.exitFullscreen);
       fitFullscreen();
+    }
+  });
+
+  const setStatus = (message) => {
+    status.textContent = message;
+    window.setTimeout(() => {
+      if (status.textContent === message) status.textContent = "";
+    }, 2200);
+  };
+  btnFitWidth.addEventListener("click", () => entry.fit());
+  btnFitDiagram.addEventListener("click", () => fitDiagram());
+  btnCopy.addEventListener("click", async () => {
+    try {
+      await copyText(source);
+      setStatus(LABELS.copied);
+    } catch {
+      setStatus(LABELS.copyFailed);
+    }
+  });
+  btnDownload.addEventListener("click", () => {
+    if (entry.svg === null) return setStatus(LABELS.noSvg);
+    try {
+      const blob = new Blob([entry.svg.outerHTML], { type: "image/svg+xml;charset=utf-8" });
+      const url = URL.createObjectURL(blob);
+      const link = document.createElement("a");
+      link.href = url;
+      link.download = "mermaid-diagram.svg";
+      link.click();
+      window.setTimeout(() => URL.revokeObjectURL(url), 0);
+    } catch {
+      setStatus(LABELS.noSvg);
     }
   });
 
@@ -247,7 +321,27 @@ function buildCard(codeBlock, source) {
     entry.fitApply();
   }
 
+  function fitDiagram() {
+    if (entry.naturalW <= 0 || entry.naturalH <= 0) return;
+    const boxW = Math.max(viewport.clientWidth - 24, 100);
+    const boxH = Math.max(viewport.clientHeight - 24, 100);
+    const k = Math.min(boxW / entry.naturalW, boxH / entry.naturalH, 1.5);
+    entry.baseScale = k;
+    entry.scale = k;
+    entry.tx = 0;
+    entry.ty = 0;
+    entry.fitApply();
+  }
+
   attachPanzoom(entry);
+  if (typeof ResizeObserver !== "undefined") {
+    entry.resizeObserver = new ResizeObserver(() => {
+      if (entry.disposed || entry.svg === null) return;
+      if (wrapper.dataset.fullscreen === "true") fitFullscreen();
+      else entry.fit();
+    });
+    entry.resizeObserver.observe(viewport);
+  }
   scheduleRender(entry);
   return entry;
 }
@@ -434,6 +528,7 @@ function maybeEnhance(codeBlock) {
  */
 function disposeEntry(entry) {
   entry.disposed = true;
+  entry.resizeObserver?.disconnect();
   if (entry.raf !== 0) cancelAnimationFrame(entry.raf);
   entries.delete(entry.codeBlock);
   wrappers.delete(entry.wrapper);
@@ -514,13 +609,23 @@ function apply(ctx) {
       }
     });
     themeObserver.observe(document.body, { attributes: true, attributeFilter: ["data-ds-dark-theme"] });
+    const onKeydown = (event) => {
+      if (event.key !== "Escape") return;
+      for (const wrapper of wrappers) {
+        if (wrapper.dataset.fullscreen !== "true") continue;
+        entries.get(wrapper._codeBlock)?.exitFullscreen?.();
+        wrapper.querySelector(".dsh-mms-btn-fullscreen")?.focus();
+        break;
+      }
+    };
+    document.addEventListener("keydown", onKeydown);
 
     document.querySelectorAll(".md-code-block").forEach((codeBlock) => maybeEnhance(codeBlock));
 
     return () => {
       observer.disconnect();
       themeObserver.disconnect();
-      for (const entry of [...entries.values()]) disposeEntry(entry);
+      document.removeEventListener("keydown", onKeydown);
       for (const wrapper of [...wrappers]) {
         const entry = entries.get(wrapper._codeBlock);
         if (entry !== undefined) disposeEntry(entry);

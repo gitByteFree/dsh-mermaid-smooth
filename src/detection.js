@@ -50,7 +50,12 @@ export function hasMermaidLanguage(classesOrInfostring) {
  * @returns true when the first line starts with a mermaid keyword.
  */
 export function isMermaidSource(source) {
-  const firstLine = source.replace(/^\s+/, "").split("\n", 1)[0] ?? "";
+  // Mermaid permits leading `%%` comments and `%%{init: ...}%%` directives.
+  // They must not prevent an explicitly valid diagram from being enhanced.
+  const firstLine = String(source ?? "").split("\n").find((line) => {
+    const trimmed = line.trim();
+    return trimmed !== "" && !trimmed.startsWith("%%");
+  })?.trim() ?? "";
   // Letters-only run: `stateDiagram-v2` extracts as `stateDiagram`.
   const keyword = /^[A-Za-z]+/.exec(firstLine)?.[0] ?? "";
   if (!SOURCE_KEYWORDS.has(keyword)) return false;

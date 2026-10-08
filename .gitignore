@@ -2,3 +2,4 @@ node_modules/
 lib/
 .marscode/
 *.log
+graphify-out/

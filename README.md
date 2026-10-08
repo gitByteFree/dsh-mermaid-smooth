@@ -7,11 +7,30 @@ default, with smooth zoom and pan, a per-fence diagram/code toggle at each
 card's top-right, a persisted per-fence preference, dark-mode follow, and a
 fully bundled offline engine (zero CDN).
 
+## Supported diagram types
+
+The plugin bundles **Mermaid 11.17.2** locally, so it renders these diagram
+types without adding another charting library:
+
+| Type | Syntax |
+| --- | --- |
+| Flowchart | `flowchart` / `graph` |
+| Sequence diagram | `sequenceDiagram` |
+| State diagram | `stateDiagram` |
+| Class diagram | `classDiagram` |
+| Mind map | `mindmap` |
+| Gantt chart / timeline | `gantt` / `timeline` |
+| ER diagram | `erDiagram` |
+| User journey, pie, Git, Sankey, XY, Kanban, and architecture diagrams | Supported by the bundled Mermaid engine |
+
 - **Default diagram** — fences in assistant messages render as SVG diagrams
   the moment they are complete; non-mermaid code blocks are untouched.
 - **Smooth interaction** — cursor-anchored wheel zoom over one composed
   transform (with a short ease-out), direct pointer drag, double-click to
   fit. Reduced-motion preferences disable all easing.
+- **Useful diagram tools** — fit to width or the whole diagram, copy the
+  Mermaid source, and download the rendered SVG. Press <kbd>Esc</kbd> to exit
+  fullscreen.
 - **Toggle at top-right** — every diagram card has a 图/文案 (diagram/code)
   switch; several fences in one message toggle independently.
 - **Per-fence memory** — the toggle state persists in localStorage keyed by

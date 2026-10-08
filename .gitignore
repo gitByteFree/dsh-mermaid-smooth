@@ -2,6 +2,7 @@ node_modules/
 lib/
 .marscode/
 *.log
+*.tgz
 graphify-out/
-.marscode/
 tasks/
+test/

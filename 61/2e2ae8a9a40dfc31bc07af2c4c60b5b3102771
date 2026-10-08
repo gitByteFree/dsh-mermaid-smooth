@@ -1,0 +1,15 @@
+.gitignore
+  h_7e95412f1b6d17 8
+  h_7e95412f1b6d17 5
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.7.5",
+  "base_commit_sha": "612e2ae8a9a40dfc31bc07af2c4c60b5b3102771",
+  "prompts": {},
+  "humans": {
+    "h_7e95412f1b6d17": {
+      "author": "chris <s.android@foxmail.com>"
+    }
+  }
+}

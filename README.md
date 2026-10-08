@@ -41,6 +41,23 @@ types without adding another charting library:
   (zero CDN), and a failed fence keeps its original code with an inline
   error banner. Uninstalling restores the conversation verbatim.
 
+## Diagram card toolbar
+
+Every card carries an icon toolbar at its top-right; hover an icon for its
+tooltip.
+
+| Icon | Action | What it does |
+| --- | --- | --- |
+| ↔ | Fit width | Scale the diagram to the card width (the initial state) |
+| ⊙ | Fit diagram | Scale so the entire diagram fits inside the viewport |
+| ⧉ | Copy source | Copy this fence's Mermaid source to the clipboard. The async Clipboard API is used when available, with a hidden-textarea fallback; a brief "Source copied" status confirms success and "Could not copy source" reports failure. |
+| ↓ | Download SVG | Save the rendered diagram as `mermaid-diagram.svg` — a vector file that stays sharp at any zoom level in browsers, docs, and design tools. If the diagram has not finished rendering, a "Diagram is not ready" status appears instead. |
+| `</>` | Diagram / code | Switch between the diagram and its source; the choice is remembered per fence |
+| ⛶ | Fullscreen | Show the diagram full-screen (diagram view only). <kbd>Esc</kbd> exits and focus returns to the fullscreen button. |
+
+Toolbar status messages auto-clear after about two seconds and are announced
+to screen readers via `aria-live="polite"`.
+
 ## Screenshots
 
 ![1](docs/1.png)

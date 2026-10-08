@@ -1,0 +1,27 @@
+.gitignore
+  h_7e95412f1b6d17 6
+  h_7e95412f1b6d17 7
+test/detection.test.mjs
+  s_4abecc588d042f::t_110c886b356637 1-75
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.7.5",
+  "base_commit_sha": "e3e3edde894b1774b956e2696e422be02cec1ef7",
+  "prompts": {},
+  "humans": {
+    "h_7e95412f1b6d17": {
+      "author": "chris <s.android@foxmail.com>"
+    }
+  },
+  "sessions": {
+    "s_4abecc588d042f": {
+      "agent_id": {
+        "tool": "claude",
+        "id": "e186391f-db21-4d37-8eb6-484c569bf2a1",
+        "model": "fuyao-coding"
+      },
+      "human_author": "chris <s.android@foxmail.com>"
+    }
+  }
+}

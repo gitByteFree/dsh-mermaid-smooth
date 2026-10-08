@@ -1,0 +1,50 @@
+README.md
+  s_4abf139e94ef8a::t_58be49098fdace 10-25
+  s_4abf139e94ef8a::t_d6c023b4ae32a1 31-33
+README.zh.md
+  s_4abf139e94ef8a::t_58be49098fdace 7-21
+  s_4abf139e94ef8a::t_d6c023b4ae32a1 24
+tasks/plan.md
+  s_4abf139e94ef8a::t_5affd42a5018a8 1-21,25-27,30-32,36-38,41-43,46-57
+  s_4abf139e94ef8a::t_cced1ac8d0ffb0 22-24,28-29,33-35,39-40,44-45
+test/detection.test.mjs
+  s_4abf139e94ef8a::t_e009f4e9437b3e 47-51
+src/client.js
+  s_4abf139e94ef8a::t_e702b74aba2eda 108-123,249,288,303,612-621,628
+  s_4abf139e94ef8a::t_696a7e830334a0 29-30
+  s_4abf139e94ef8a::t_03cc8e1dc05c5e 334,337-344,531
+  s_4abf139e94ef8a::t_f0dc9d11bff72b 22-23,31-32,47,181-189,191,197-205,222-223,237,245-246,272-273,278-287,289-302,304-308,324-328
+  s_4abf139e94ef8a::t_2ff337dbecaeb0 329-333
+  s_4abf139e94ef8a::t_f4a0dbe0d6d8b0 335
+src/detection.js
+  s_4abf139e94ef8a::t_dada1fd1212718 53-58
+tasks/todo.md
+  s_4abf139e94ef8a::t_d6c023b4ae32a1 3-8
+  s_4abf139e94ef8a::t_5affd42a5018a8 1-2
+.gitignore
+  s_4abecc588d042f::t_3c66267dc7250d 5
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.7.5",
+  "base_commit_sha": "23d2170ab0b1e7929c0b44e37df58d1c4dbb8e2f",
+  "prompts": {},
+  "sessions": {
+    "s_4abecc588d042f": {
+      "agent_id": {
+        "tool": "claude",
+        "id": "e186391f-db21-4d37-8eb6-484c569bf2a1",
+        "model": "fuyao-coding"
+      },
+      "human_author": "chris <s.android@foxmail.com>"
+    },
+    "s_4abf139e94ef8a": {
+      "agent_id": {
+        "tool": "codex",
+        "id": "01a0b386-d3ee-7901-bf86-f7eba625a539",
+        "model": "gpt-5.6-terra"
+      },
+      "human_author": "chris <s.android@foxmail.com>"
+    }
+  }
+}

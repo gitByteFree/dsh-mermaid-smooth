@@ -74,11 +74,13 @@ dsh plugin --profile web add 'github:gitByteFree/dsh-mermaid-smooth#<40位commit
 
 **方式三：从 Release tarball 安装（离线 / 不便走 git 的环境）**
 
-从本仓库 [Releases](https://github.com/gitByteFree/dsh-mermaid-smooth/releases) 下载 `dsh-mermaid-smooth-<版本>.tgz`（内含构建好的 `lib/client.js`，安装时无需执行任何 prepare 脚本），然后：
+从本仓库 [Releases](https://github.com/gitByteFree/dsh-mermaid-smooth/releases) 下载 `dsh-mermaid-smooth-0.2.0.tgz`（内含构建好的 `lib/client.js`，安装时无需执行任何 prepare 脚本），进入下载目录后执行：
 
 ```sh
-dsh plugin --profile web add ./dsh-mermaid-smooth-<版本>.tgz
+dsh plugin --profile web add ./dsh-mermaid-smooth-0.2.0.tgz
 ```
+
+命令里的 `0.2.0` 是**真实文件名**，不是占位符 —— 请改成你实际下载的版本，并去掉一切 `<...>` 尖括号（zsh 会把裸的 `<...>` 当作输入重定向，报「没有那个文件或目录」）。保留 `./` 前缀：`dsh plugin add` 只把 `./`、`../` 开头的路径锚定到你当前所在目录，裸文件名会在 profile 目录里查找。
 
 **方式四：克隆后从本地路径安装（开发迭代）**
 

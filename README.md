@@ -99,14 +99,20 @@ bundle), so git and Node.js ≥ 20 are required.
 
 **3. From a release tarball (offline / where git is inconvenient)**
 
-Download `dsh-mermaid-smooth-<version>.tgz` from this repo's
+Download `dsh-mermaid-smooth-0.2.0.tgz` from this repo's
 [Releases](https://github.com/gitByteFree/dsh-mermaid-smooth/releases) (it
 contains the prebuilt `lib/client.js`, so no `prepare` script runs at install
-time), then:
+time), then run from the directory you downloaded it to:
 
 ```sh
-dsh plugin --profile web add ./dsh-mermaid-smooth-<version>.tgz
+dsh plugin --profile web add ./dsh-mermaid-smooth-0.2.0.tgz
 ```
+
+`0.2.0` above is a real filename, not a placeholder — match the version you
+downloaded and drop any `<...>` brackets (zsh reads a bare `<...>` as input
+redirection and fails with "no such file or directory"). Keep the `./`
+prefix: `dsh plugin add` anchors `./`-relative paths to your current
+directory, while a bare filename would be looked up inside the profile.
 
 **4. Local clone (for development)**
 

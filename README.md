@@ -97,6 +97,22 @@ history page); later changes on `main` will not silently alter installed code.
 The source is installed and built at install time (`prepare` runs the esbuild
 bundle), so git and Node.js ≥ 20 are required.
 
+pnpm ≥ 10 blocks that `prepare` build for git-hosted packages until you
+allowlist it: the first install fails with `ERR_PNPM_GIT_DEP_PREPARE_NOT_ALLOWED`
+and prints the exact key to add. Copy that key verbatim (it embeds the
+codeload URL with the full commit sha — a bare package name does not match)
+under `allowBuilds` in the profile's `pnpm-workspace.yaml`, then re-run:
+
+```yaml
+allowBuilds:
+  dsh-mermaid-smooth@https://codeload.github.com/gitByteFree/dsh-mermaid-smooth/tar.gz/<full-commit-sha>: true
+```
+
+This is the same trust decision as any build-time script: only allowlist
+packages whose source you have reviewed. If you would rather not run
+build-time code at all, use methods 1 or 3, which ship the prebuilt bundle
+and need no `allowBuilds` entry.
+
 **3. From a release tarball (offline / where git is inconvenient)**
 
 Download `dsh-mermaid-smooth-0.2.0.tgz` from this repo's

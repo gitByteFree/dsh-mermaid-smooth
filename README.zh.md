@@ -72,6 +72,15 @@ dsh plugin --profile web add 'github:gitByteFree/dsh-mermaid-smooth#<40位commit
 
 固定到你想装的 commit（如仓库提交历史页显示的 main HEAD），之后 main 的新改动不会静默改变已安装代码。源码安装时会在本机构建（`prepare` 脚本执行 esbuild 打包），需要 git 与 Node.js ≥ 20。
 
+pnpm ≥ 10 默认拦截 git 来源包的 `prepare` 构建脚本：首次安装会报 `ERR_PNPM_GIT_DEP_PREPARE_NOT_ALLOWED`，并把需要加白名单的精确键名打印在报错里。把该键**原样**复制（内嵌 codeload URL 和完整 commit sha，只写短包名匹配不上）到 profile 的 `pnpm-workspace.yaml` 的 `allowBuilds` 下，再重新执行安装：
+
+```yaml
+allowBuilds:
+  dsh-mermaid-smooth@https://codeload.github.com/gitByteFree/dsh-mermaid-smooth/tar.gz/<40位commit>: true
+```
+
+这与任何构建期脚本是同一种信任决定：只对你审查过来源的包放行。如果不想在安装时执行构建代码，请用方式一或方式三 —— 它们内置预构建产物，无需任何 `allowBuilds` 条目。
+
 **方式三：从 Release tarball 安装（离线 / 不便走 git 的环境）**
 
 从本仓库 [Releases](https://github.com/gitByteFree/dsh-mermaid-smooth/releases) 下载 `dsh-mermaid-smooth-0.2.0.tgz`（内含构建好的 `lib/client.js`，安装时无需执行任何 prepare 脚本），进入下载目录后执行：

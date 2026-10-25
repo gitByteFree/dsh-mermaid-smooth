@@ -1,0 +1,87 @@
+{
+  "format": 1,
+  "title": {
+    "en": "Mermaid Smooth plugins",
+    "zh": "Mermaid 丝滑图表插件"
+  },
+  "description": {
+    "en": "Offline Mermaid diagrams for DSH Web and Desktop chat, with smooth zoom and a per-fence diagram/code switch.",
+    "zh": "为 DSH Web 与桌面版对话提供离线 Mermaid 图表：丝滑缩放拖拽，按围栏切换图/源码。"
+  },
+  "metadata": {
+    "categories": {
+      "diagrams": {
+        "title": {
+          "en": "Diagrams",
+          "zh": "图表"
+        }
+      }
+    },
+    "labels": {
+      "mermaid": {
+        "title": {
+          "en": "Mermaid",
+          "zh": "Mermaid"
+        }
+      },
+      "offline": {
+        "title": {
+          "en": "Offline",
+          "zh": "离线"
+        }
+      }
+    }
+  },
+  "plugins": [
+    {
+      "name": "dsh-mermaid-smooth",
+      "title": {
+        "en": "Mermaid Smooth",
+        "zh": "Mermaid 丝滑图表"
+      },
+      "description": {
+        "en": "Mermaid fences in DSH Web and Desktop chat render as diagrams by default: smooth zoom and pan, a per-fence diagram/code switch, dark-mode follow, and a fully bundled offline engine.",
+        "zh": "DSH Web 与桌面版对话里的 mermaid 围栏默认成图：丝滑缩放拖拽、按围栏切换图/源码、明暗主题跟随，引擎本地打包完全离线。"
+      },
+      "icon": "icons/icon.svg",
+      "author": "chris",
+      "homepage": "https://github.com/gitByteFree/dsh-mermaid-smooth#readme",
+      "repository": {
+        "url": "https://github.com/gitByteFree/dsh-mermaid-smooth"
+      },
+      "metadata": {
+        "category": "diagrams",
+        "labels": [
+          "mermaid",
+          "offline"
+        ],
+        "keywords": [
+          "dsh",
+          "dsh-plugin",
+          "deepseek-harness",
+          "mermaid",
+          "diagram",
+          "flowchart",
+          "markdown",
+          "visualization",
+          "offline"
+        ]
+      },
+      "dist-tags": {
+        "latest": "0.2.3"
+      },
+      "versions": [
+        {
+          "version": "0.2.3",
+          "publishTimestamp": 1792917991,
+          "source": {
+            "type": "npm"
+          },
+          "engines": {
+            "dsh": ">=0.2.1-rc.2"
+          }
+        }
+      ]
+    }
+  ]
+}

@@ -2,10 +2,14 @@
 
 English | [中文](README.zh.md)
 
-Render mermaid code fences in DeepSeek Harness (dsh) web chat as diagrams by
-default, with smooth zoom and pan, a per-fence diagram/code toggle at each
-card's top-right, a persisted per-fence preference, dark-mode follow, and a
-fully bundled offline engine (zero CDN).
+Render mermaid code fences in DeepSeek Harness (DSH) Web chat and the DSH
+Desktop app as diagrams by default, with smooth zoom and pan, a per-fence
+diagram/code toggle at each card's top-right, a persisted per-fence
+preference, dark-mode follow, and a fully bundled offline engine (zero CDN).
+
+The Desktop app is an Electron shell around the complete DSH Web application,
+so it loads the same Web frontend and the same plugin bundle — one client
+build serves both, with no Desktop-specific code path.
 
 ## Supported diagram types
 
@@ -68,12 +72,12 @@ to screen readers via `aria-live="polite"`.
 
 ## Install
 
-dsh-mermaid-smooth is a plugin for the DeepSeek Harness (dsh) web UI. Before
-proceeding, make sure the dsh CLI and web environment are installed and set
-up.
+dsh-mermaid-smooth is a plugin for the DeepSeek Harness (DSH) Web UI and the
+DSH Desktop app. Before proceeding, make sure DSH is installed and set up.
 
-Four ways — pick one, then restart DSH Web (the current session ends, but DSH
-sessions are persisted on disk and can be resumed after restart).
+Six ways — pick one, then restart DSH Web or the Desktop app (the current
+session ends, but DSH sessions are persisted on disk and can be resumed after
+restart).
 
 **1. npm package (recommended, simplest)**
 
@@ -138,8 +142,52 @@ cd dsh-mermaid-smooth
 dsh plugin --profile web add .
 ```
 
-Restart the web app (`dsh web`, or your `dsh-web` service) so the new bundle
-layer is composed.
+**5. From the DSH plugin market (Discover)**
+
+This repo publishes its own market index, so the plugin can be installed from
+**Discover** without typing a package name:
+
+```text
+https://cdn.jsdelivr.net/gh/gitByteFree/dsh-mermaid-smooth@main/market/index.json
+```
+
+Open **Plugins** in the sidebar, switch on **Custom plugin markets** under
+**Experimental plugins** if it is off, then in **Discover** add the index URL
+above as a source and install **Mermaid Smooth**. The same index works in the
+Desktop app.
+
+jsDelivr serves the index because Discover needs a direct `200` without
+redirects; a release can take up to 12 hours to appear there. To pick up a
+fresh release immediately, pin an immutable commit (`@<commit>` instead of
+`@main`) or use
+`https://raw.githubusercontent.com/gitByteFree/dsh-mermaid-smooth/main/market/index.json`.
+
+**6. DSH Desktop app (Electron)**
+
+The Desktop app bundles the complete DSH Web application, so this plugin needs
+no separate Desktop build. Desktop exclusively owns the `desktop` profile, and
+only the CLI bundled with the app can manage it — an npm-installed `dsh`
+refuses it with
+`profile "desktop" is managed exclusively by the Electron application`.
+
+1. Launch the Desktop app once so it initializes `$DSH_HOME/profiles/desktop`,
+   then quit it completely.
+2. Install the app's command from the menu (**Manage dsh Command… →
+   Install**) and run:
+
+   ```sh
+   dsh plugin --profile desktop add dsh-mermaid-smooth
+   ```
+
+3. Reopen the app. You can also install from its **Plugins** page or from the
+   market index in method 5.
+
+Runtime behaviour is identical: diagrams, wheel zoom and drag, the per-fence
+switch, the persisted preference, theme follow, copy, SVG download, and
+fullscreen all run in the shared Web client.
+
+Restart the web app (`dsh web`, or your `dsh-web` service) or reopen the
+Desktop app so the new bundle layer is composed.
 
 ## License
 

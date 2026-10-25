@@ -1,30 +1,57 @@
 {
   "name": "dsh-mermaid-smooth",
   "version": "0.2.2",
-  "description": "Render mermaid fences in dsh web chat as diagrams by default with smooth zoom/pan, per-fence diagram/code toggle at top-right, persisted per-fence preference, dark-mode follow, and full offline (bundled engine, zero CDN). DSH 对话 mermaid 围栏默认成图：丝滑缩放拖拽、图右上角图/文案切换、按围栏记忆偏好、明暗主题跟随、引擎本地打包完全离线。",
+  "description": "Render mermaid fences in DeepSeek Harness (Web and Desktop) chat as diagrams by default with smooth zoom/pan, per-fence diagram/code toggle at top-right, persisted per-fence preference, dark-mode follow, and full offline (bundled engine, zero CDN). DSH Web 与桌面版对话中的 mermaid 围栏默认成图：丝滑缩放拖拽、图右上角图/文案切换、按围栏记忆偏好、明暗主题跟随、引擎本地打包完全离线。",
   "license": "MIT",
+  "author": "chris",
+  "homepage": "https://github.com/gitByteFree/dsh-mermaid-smooth#readme",
   "repository": {
     "type": "git",
     "url": "git+https://github.com/gitByteFree/dsh-mermaid-smooth.git"
+  },
+  "bugs": {
+    "url": "https://github.com/gitByteFree/dsh-mermaid-smooth/issues"
+  },
+  "keywords": [
+    "dsh",
+    "dsh-plugin",
+    "deepseek-harness",
+    "mermaid",
+    "diagram",
+    "flowchart",
+    "markdown",
+    "visualization",
+    "offline"
+  ],
+  "publishConfig": {
+    "access": "public"
+  },
+  "engines": {
+    "dsh": ">=0.2.1-rc.2"
   },
   "type": "module",
   "main": "lib/index.js",
   "exports": {
     ".": "./lib/index.js",
     "./client": "./lib/client.js",
+    "./locale/*.json": "./locale/*.json",
+    "./icon": "./icon.svg",
     "./package.json": "./package.json"
   },
   "files": [
     "lib/index.js",
     "lib/client.js",
     "cordis.patch.yml",
+    "icon.svg",
+    "locale/*.json",
     "README.md",
     "LICENSE"
   ],
   "scripts": {
     "build": "node scripts/build.mjs",
     "prepare": "node scripts/build.mjs",
-    "test": "node --test \"test/*.test.mjs\""
+    "test": "node --test \"test/*.test.mjs\"",
+    "market": "node scripts/market.mjs"
   },
   "devDependencies": {
     "mermaid": "^11.17.2",

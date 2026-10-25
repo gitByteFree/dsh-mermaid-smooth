@@ -2,7 +2,9 @@
 
 [English](README.md) | 中文
 
-将 DeepSeek Harness（dsh）Web 对话中的 mermaid 代码围栏**默认渲染为图**：丝滑的缩放与拖拽，每张图右上角提供图/文案切换，偏好按围栏记忆，明暗主题跟随，渲染引擎完全本地打包（零 CDN）。
+将 DeepSeek Harness（DSH）**Web 与桌面版**对话中的 mermaid 代码围栏**默认渲染为图**：丝滑的缩放与拖拽，每张图右上角提供图/文案切换，偏好按围栏记忆，明暗主题跟随，渲染引擎完全本地打包（零 CDN）。
+
+桌面版是完整 DSH Web 应用的 Electron 外壳，加载的是同一份 Web 前端与同一份插件 bundle —— 一份客户端产物同时服务两端，没有桌面版专用的代码分支。
 
 ## 支持的图表类型
 
@@ -52,9 +54,9 @@
 
 ## 安装
 
-dsh-mermaid-smooth 是 DeepSeek Harness (dsh) Web 界面的插件。使用前请确保你已安装并配置好 dsh 命令行工具及 Web 环境。
+dsh-mermaid-smooth 是 DeepSeek Harness（DSH）Web 界面与桌面版的插件。使用前请确保你已安装并配置好 dsh。
 
-四种方式任选其一，装完重启 DSH Web 即生效（当前会话会中断，但 DSH 会话有磁盘持久化，重启后可以恢复）。
+六种方式任选其一，装完重启 DSH Web 或桌面版即生效（当前会话会中断，但 DSH 会话有磁盘持久化，重启后可以恢复）。
 
 **方式一：npm 正式包（推荐，最简单）**
 
@@ -99,7 +101,36 @@ cd dsh-mermaid-smooth
 dsh plugin --profile web add .
 ```
 
-安装后重启 web 应用（`dsh web` 或你的 `dsh-web` 服务），使新 bundle 层生效。
+**方式五：从 DSH 插件市场（Discover）安装**
+
+本仓库自带一份插件市场索引，因此可以在 **Discover** 里直接安装，无需手输包名：
+
+```text
+https://cdn.jsdelivr.net/gh/gitByteFree/dsh-mermaid-smooth@main/market/index.json
+```
+
+打开侧边栏 **Plugins**，若 **Experimental plugins** 下的 **Custom plugin markets** 未开启则先打开；随后在 **Discover** 中把上面的索引 URL 添加为来源，再安装 **Mermaid 丝滑图表**。桌面版同样可用这份索引。
+
+索引走 jsDelivr 分发，因为 Discover 要求直接返回 `200` 且不重定向；新版本可能需要最多 12 小时才会出现在上面。想立刻拿到刚发布的版本，可以把索引 URL 钉到不可变 commit（用 `@<commit>` 代替 `@main`），或改用
+`https://raw.githubusercontent.com/gitByteFree/dsh-mermaid-smooth/main/market/index.json`。
+
+**方式六：从 DSH 桌面版（Electron）安装**
+
+桌面版内置了完整的 DSH Web 应用，因此本插件无需单独的桌面版构建。`desktop` profile 由桌面版独占，只有桌面版自带的 CLI 能管理它 —— npm 全局安装的 `dsh` 会直接拒绝：
+`profile "desktop" is managed exclusively by the Electron application`。
+
+1. 先启动一次桌面版，让它初始化 `$DSH_HOME/profiles/desktop`，然后**完全退出**应用。
+2. 从应用菜单 **Manage dsh Command… → Install** 安装 CLI，然后执行：
+
+   ```sh
+   dsh plugin --profile desktop add dsh-mermaid-smooth
+   ```
+
+3. 重新打开桌面版即可。也可以通过应用内 **Plugins** 页或方式五的市场索引安装。
+
+两端运行时行为一致：成图、滚轮缩放与拖拽、按围栏切换、偏好记忆、主题跟随、复制、SVG 下载、全屏都跑在同一份 Web 客户端里。
+
+安装后重启 web 应用（`dsh web` 或你的 `dsh-web` 服务）或重新打开桌面版，使新 bundle 层生效。
 
 ## 许可
 
